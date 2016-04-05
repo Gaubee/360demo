@@ -1005,7 +1005,6 @@ var PhotoSphereViewer = function(args) {
 		if (evt.touches.length == 1 && mousedown) {
 			var touch = evt.touches[0];
 			if (touch.target.parentNode == canvas_container) {
-				console.log(requestAnimationFrame)
 				requestAnimationFrame(function () {
 					move(parseInt(touch.clientX), parseInt(touch.clientY));
 				});
