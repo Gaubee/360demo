@@ -1001,12 +1001,15 @@ var PhotoSphereViewer = function(args) {
 
 	var onTouchMove = function(evt) {
 		// Move
-		console.log(evt.touches.length,mousedown)
+		// console.log(evt.touches.length,mousedown,Math.random())
 		if (evt.touches.length == 1 && mousedown) {
 			var touch = evt.touches[0];
 			if (touch.target.parentNode == canvas_container) {
-				evt.preventDefault();
-				move(parseInt(touch.clientX), parseInt(touch.clientY));
+				console.log(requestAnimationFrame)
+				requestAnimationFrame(function () {
+					move(parseInt(touch.clientX), parseInt(touch.clientY));
+				});
+				return evt.preventDefault();
 			}
 		}
 
@@ -1233,6 +1236,7 @@ var PhotoSphereViewer = function(args) {
 	var isFullscreenEnabled = function() {
 		return (!!document.fullscreenElement || !!document.mozFullScreenElement || !!document.webkitFullscreenElement || !!document.msFullscreenElement);
 	};
+	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || setTimeout;
 
 	/**
 	 * Fullscreen state has changed.
@@ -2633,7 +2637,7 @@ var Sphoords = function() {
 
 	var onDeviceOrientation = function(evt) {
 		// Current screen orientation
-		orientation = Sphoords.getScreenOrientation();
+		orientation = Sphoords.getScreenOrientation()||'portrait-primary';
 
 		// Coordinates depend on the orientation
 		var theta = 0, phi = 0;
@@ -2717,8 +2721,11 @@ var Sphoords = function() {
 		long = long_deg * DEG_TO_RAD;
 		lat = lat_deg * DEG_TO_RAD;
 
+		// console.log(engine,long, lat);
+
 		// We execute the wanted functions
-		executeListeners();
+		requestAnimationFrame(executeListeners)
+		// executeListeners();
 	};
 
 	/**
