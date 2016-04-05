@@ -1,4 +1,4 @@
-var imgs = ["19011030-ea7cca1ce2d34d70aa678b6336d7decc.jpg", "sun.jpg", "snow.jpg"]
+var imgs = ["street.jpg", "sun.jpg", "snow.jpg"]
 var qs = {}
 location.search.substr(1).split("&").forEach(function(data) {
 	var info = data.split("=");
