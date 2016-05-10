@@ -46,7 +46,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-html, body{
+html, body, #jSouperApp{
     height: 100%;
     width: 100%;
 }
