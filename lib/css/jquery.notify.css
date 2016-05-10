@@ -1,0 +1,81 @@
+.notify-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.notify-container .notify {
+    background-color: #eee;
+    display: block;
+    position: relative;
+    min-width: 220px;
+    color: #333;
+    padding: 10px;
+    margin: 2px 2px 2px 0;
+}
+.notify-container .notify .caption {
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+.notify-container .notify .content {
+    font-size: 14px;
+    line-height: 16px;
+}
+.notify-wrapper {
+    position: relative;
+    background-color: #333;
+    width: auto;
+    height: auto;
+    min-width: 250px;
+    color: #eee;
+}
+
+
+.notify-container .waiting:after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, .2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, .2) 50%, 
+    rgba(255, 255, 255, .2) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  z-index: 1;
+  background-size: 50px 50px;
+  animation: notify-move 2s linear infinite;
+  -webkit-animation: notify-move 2s linear infinite;
+  overflow: hidden;
+}
+
+@keyframes notify-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-moz-keyframes mymove /* Firefox */
+{
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}
+@-webkit-keyframes notify-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 50px;
+  }
+}

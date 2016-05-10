@@ -1,0 +1,12 @@
+<!-- <div>请登录</div> -->
+
+<img-uploader
+	input-key="upload_image_url",
+	upload-callback="to_quanjing_short_url"
+></img-uploader>
+{{#if res_url}}
+<br>
+<a target="_blank" href="{{res_url}}">全景链接：{{res_url}}</a>
+<br>
+<jqrcode text="{{res_url}}">
+{{/if}}

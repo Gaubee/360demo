@@ -1,0 +1,154 @@
+{{setTitle "接口快速查询"}}
+<link href='http://fonts.useso.com/css?family=Droid Sans Mono:400' rel='stylesheet' type='text/css'>
+<link href="http://fonts.useso.com/css?family=Material+Icons"
+      rel="stylesheet">
+<div class="controller-bar">
+	<div class="tip toggle_details hint hint--left" data-hint="显示/隐藏所有接口详情" event-click="{{'$API.$Event.toggle_all_details'}}"><span class="material-icons">visibility</span></div>
+</div>
+<xmp type="template" name="apis-object-attrs">
+	<ul>
+	{{#each attrs}}
+		<li>
+			<h6>{{name}}<i style="padding-left: 1.5em;">{{type}}</i><span style="padding-left: 1em; font-weight: 200;">{{can_null&&'可空'}}</span></h6>
+			<p>{{des}}</p>
+			{{#> "apis-object-attrs","$This",attrs.length}}
+		</li>
+	{{/each}}
+	</ul>
+</xmp>
+<div class="apis" style="padding:0 4em; background-color: #242833;">
+<label for="app-root">
+	<span>接口源：</span>
+	<input id="app-root" value="{{api_root}}" bind-input="{{'api_root'}}"></input>
+</label>
+{{#each $API.$Data}}
+	<h2>接口集：{{app.app_name}} </h2>
+		<div class="input">
+			<input type="search" placeholder="快速搜索接口" bind-input="{{'search_text'}}" value="{{search_text}}" event-input="{{'$Top.$API.$Event.search_api'}}">
+		</div>
+	<p>开发者：{{app.owner.user_name}}； 版本号：{{base_info.info.version||无}}; URL前缀：{{$Top.api_root}}/{{app.app_name}}</p>
+	<ul>
+	{{#each apis}}
+		<li>
+			<div style="padding:1em 0;">
+				<h3>
+					<span style="cursor: pointer;" class="hint hint--bottom" data-hint="点击复制接口">
+						<span class="copy-able-url hint hint--top" data-hint="{{obj_path||$Top.$API.$Help.path_to_obj(path)}}">
+							<i class="material-icons">link</i>
+						</span>
+					</span>
+					<b style="text-transform: uppercase;">[{{HTML method}}] </b>
+					<span style="cursor: pointer;" event-click="{{'$Top.$API.$Event.toggle_details'}}"> {{HTML path}} </span>
+					<span style="padding-left: 2em; font-weight: 200;">{{HTML des}}</span>
+				</h3>
+				{{#> "apis-doc-details","$This",doc.details||doc.params.length||doc.returns.length}}
+				<xmp type="template" name="apis-doc-details">
+					<div>
+					{{#if !__hide_details}}
+						<p>{{doc.details}}</p>
+						{{#if doc.params.length}}
+							<h4>所需参数</h4>
+							<ul>
+							{{#each doc.params}}
+								<li>
+									<h5>{{name}}<i style="padding-left: 1.5em;">{{type}}</i><span style="padding-left: 1em; font-weight: 200;">{{can_null&&'可空'}}</span></h5>
+									<p>{{des}}</p>
+									{{#> "apis-object-attrs","$This",attrs.length}}
+								</li>
+							{{/each}}
+							</ul>
+						{{/if}}
+						{{#if doc.returns.length}}
+							<h4>返回值</h4>
+							<ul>
+							{{#each doc.returns}}
+								<li>
+									<h5>{{name}}<i style="padding-left: 1.5em;">{{type}}</i></h5>
+									<p>{{des}}</p>
+									{{#> "apis-object-attrs","$This",attrs.length}}
+								</li>
+							{{/each}}
+							</ul>
+						{{/if}}
+						<br>
+					{{#else}}
+						<i class="hidden_details" event-click="{{'$Top.$API.$Event.toggle_details'}}">……</i>
+					{{/if}}
+					</div>
+				</xmp>
+				<hr>
+			</div>
+		</li>
+	{{/each}}
+	</ul>
+{{/each}}
+</div>
+<!-- <div class="icons">
+	<br>
+	<center><h1>图标库<i>（点击复制）</i></h1></center>
+	<br>
+	{{#each $API.$Icons}}
+	<span data-hint="icon-{{$This}}" class="copy-able-icon hint hint--top"><i class="icon-{{$This}}"></i></span>
+	{{/each}}
+</div>
+ -->
+<style>
+	#jSouperApp .apis{
+		font-family: 'Droid Sans Mono',  Arial, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif!important;
+	}
+	#jSouperApp .apis hl{
+		color: #eee;
+		text-shadow:0px 0px 3px yellow;
+	}
+	#jSouperApp .apis .hidden_details{
+		cursor: pointer;
+		border-radius: 4px;
+		background-color: rgb(55, 59, 72);
+		font-weight: 600;
+		padding: 0 0.3em;
+	}
+	#jSouperApp .apis .hidden_details:hover{
+		background-color: rgb(90, 96, 115);
+		color: #AFAFAF;
+	}
+	.hint:hover:after{
+		font-weight: 400;
+	}
+	#jSouperApp .apis p{
+		white-space: pre-wrap;
+		font-size: 0.8em;
+	}
+	div{
+		line-height: 2em;
+	}
+	.controller-bar{
+		position: fixed;
+		right: 2em;
+		bottom: 2em;
+		z-index: 1000;
+	}
+	.controller-bar .tip{
+		display: inline-block;
+		width: 2em;
+		height: 2em;
+		border-radius: 12%;
+		background-color: #FFF;
+		cursor: pointer;
+		text-align: center;
+		line-height: 2em;
+	}
+	.icons{
+		padding: 0 6em 0 4em;
+	}
+	.icons span{
+		display: inline-block;
+		vertical-align: top;
+		font-size: 1.5em;
+		cursor: pointer;
+		padding:0.1em 0.4em;
+	}
+	.material-icons{
+		vertical-align: middle;
+	    line-height: inherit;
+	}
+</style>

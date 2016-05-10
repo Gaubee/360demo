@@ -1,0 +1,142 @@
+.kill-all-style {
+	background: none;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	color: initial;
+	box-shadow: none
+}
+
+.kill-all-style:hover {
+	background: none
+}
+
+ueditor{
+	display: block;
+	width: 100%;
+}
+ueditor .edui-btn-toolbar{
+	/* 控件自动换行 */
+	line-height: 0;
+	white-space: normal;
+}
+
+/* pagecut */
+
+pagecut2{
+    margin-top: 30px;
+    width: 220px;
+    height: 24px;
+    display: block;
+    div {
+        display: inline-block;
+        text-decoration: none;
+        a {
+            color: #21242b;
+            span {
+                font-size: 13px;
+                margin-left: 10px;
+                cursor: pointer;
+                &:hover {
+                    color: #1ba1e2;
+                }
+            }
+        }
+        .icon-arrow-left, .icon-arrow-right {
+            font-size: 13px;
+            color: #1ba1e2;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    }
+}
+
+/* img uploader */
+
+imguploaderwrap {
+	width: 120px;
+	height: 120px;
+	overflow: hidden;
+	display: inline-block;
+	vertical-align: top;
+}
+
+imguploaderwrap .upload-img-preview {
+	width: 100%;
+	height: 100%;
+	border-radius: 2%
+}
+
+imguploaderwrap imgmark {
+	display: block;
+	height: 2em;
+	background: rgba(170,171,177,0.5) !important;
+	background-color: #aaabb1;
+	position: relative;
+	filter: alpha(opacity=50);
+	position: relative;
+	z-index: 1
+}
+
+imguploaderwrap imgmark .button-item {
+	height: 2em;
+	text-align: center;
+	font-size: 1.1em;
+	cursor: pointer;
+	color: #fff
+}
+
+imguploaderwrap imgmark.show {
+	margin-top: -2em
+}
+
+imguploaderwrap .upload-loding {
+	width: 90%;
+	height: 0;
+	border: 3px dotted #d4d5d8;
+	border-radius: 20%;
+	text-align: center;
+	padding-top: 45%;
+	padding-bottom: 45%;
+	font-size: 18px;
+	line-height: 0px
+}
+
+imguploaderwrap .click-to-add {
+	width: 90%;
+	height: 90%;
+	border: 3px dotted #555558;
+	border-radius: 20%
+
+}
+
+imguploaderwrap .click-to-add input {
+	height: 100%;
+	width: 100%;
+	display: block;
+	position: relative;
+	z-index: 2;
+	margin-bottom: -75%;
+	-webkit-opacity: 0;
+	-moz-opacity: 0;
+	-khtml-opacity: 0;
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	*filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0)
+}
+
+imguploaderwrap .click-to-add .icon {
+	width: 100%;
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+	display: block
+}
+
+imguploaderwrap .click-to-add .value {
+	text-align: center;
+	display: block
+}
+

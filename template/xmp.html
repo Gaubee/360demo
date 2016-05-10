@@ -1,0 +1,200 @@
+<xmp type="tag" name="ueditor">
+    <ueditor ${__all_attrs__}>
+        <uecontanier style="width:1000px;height:240px;"></uecontanier>
+    </ueditor>
+</xmp>
+
+<!-- 分页控件 -->
+<xmp type="tag" name="pagination2">
+   <pagination2 ${__all_attrs__}>
+        <div class="page-info">
+            <span>当前位置：第<b>{{${page-info}.page+1}}</b>页</span>
+        </div>
+        <div 
+         event-click="{{'$CPrivate.$Event.pre_page'}}" 
+         class="pre-page {{${page-info}.page==0&&'disabled'}}">&lt;</div>
+        <div class="pages">
+            {{#each ${page-info}._number_list}}
+            <div
+             event-click="{{'$Caller.$CPrivate.$Event.jump_page'}}" 
+             class="page {{$Top.${page-info}.page==$Index&&'current_page'}}">{{$Index+1}}</div>
+            {{/each}}
+        </div>
+        <div 
+         event-click="{{'$CPrivate.$Event.next_page'}}" 
+         class="next-page {{${page-info}.page+1>=${page-info}.total_page&&'disabled'}}">&gt;</div>
+    </pagination2>
+</xmp>
+
+<!-- 新版分页控件 -->
+<xmp type="tag" name="pagecut2">
+    <pagecut2 ${__all_attrs__}>
+        <div id="pre_page">
+            {{#if $CPrivate.$Cache.page!=0}}
+            <a title="前一页" event-click="{{'$CPrivate.$Event.pre_page'}}">
+                <!-- <i name="pre_page" class="icon-arrow-left"></i> -->
+                <android:icon type="navigation-arrow-back"></android:icon>
+            </a>
+            {{/if}}
+        </div>
+
+        <div id="page_num">
+            {{#each $CPrivate.$Cache.number_list}}
+                {{#if $Index==$Caller.$CPrivate.$Cache.page}}
+                <span> [当前页：{{$This}}] </span>
+                {{#else}}
+                <a event-click="{{'$Caller.$CPrivate.$Event.change_page'}}" >
+                    <span>{{$This}}</span>
+                </a>
+                {{/if}}
+            {{/each}}
+        </div>
+
+        <div id="next_page">
+            {{#if $CPrivate.$Cache.number_list.length>$CPrivate.$Cache.thepagenum}}
+            <a title="后一页" event-click="{{'$CPrivate.$Event.next_page'}}" >
+                <!-- <i name="next_page" class="icon-arrow-right"></i> -->
+                <android:icon type="navigation-arrow-forward"></android:icon>
+            </a>
+            {{/if}}
+        </div>
+    </pagecut2>
+</xmp>
+<!-- 图片上传控件 -->
+<xmp type="tag" name="img-uploader">
+    <imgUploaderWrap ${__all_attrs__}>
+    {{#if $CPrivate.$Cache.img_url}}
+        <div style="width:100%;height:100%;"
+            event-mouseenter="{{'$CPrivate.$Event.show_mark'}}"
+            event-click="{{'$CPrivate.$Event.toggle_mark'}}"
+            event-mouseleave="{{'$CPrivate.$Event.hide_mark'}}">
+            <img class="upload-img-preview" bind-src="{{$CPrivate.$Cache.img_url}}?imageView/1/w/{{$CPrivate.$Cache.img_width||1}}/h/{{$CPrivate.$Cache.img_height||1}}"/>
+            <imgMark>
+                <div class="button-item" event-click="{{'$CPrivate.$Event.remove'}}" event-click-onremove="${onremove}">移除</div>
+            </imgMark>
+        </div>
+    {{#else}}
+        {{#if $CPrivate.$Cache.uploading}}
+        <div class="upload-loding">上传中</div>
+        {{#else}}
+        <div class="click-to-add">
+            <input name="up" type="file" accept="image/*" event-change="{{'$CPrivate.$Event.new_goods.upload_img'}}" />
+            <i class="icon">+</i>
+            <p class="value">{{$CPrivate.$Cache.text}}</p>
+        </div>
+        {{/if}}
+    {{/if}}
+    </imgUploaderWrap>
+</xmp>
+<xmp type="tag" name="m-img-uploader">
+    <mImgUploaderWrap ${__all_attrs__}>
+    <input class="multiple-upload" type="file" accept="image/*" multiple event-change="{{'$CPrivate.$Event.new_goods.multiple_upload_detail_img'}}" disabled="disabled" />
+    ${innerHTML}
+    </mImgUploaderWrap>
+</xmp>
+<xmp type="tag" name="share-weibo" >
+    <div event-click-share-weibo="{{'$CPrivate.$Event.shareToWeibo'}}"  ${__all_attrs__}></div>
+</xmp>
+<xmp type="tag" name="href">
+    <href ${__all_attrs__} event-click-noreload-jump="{{'$CPrivate.$Event.noreload_jump'}}">${innerHTML}</href>
+</xmp>
+<!-- 商品块状展示 -->
+<xmp type="template" name="goods-item">
+    <commodity style="display:none;" goods-id="{{_id}}"></commodity>
+    <div class="commodity" goods-id="{{_id}}">
+        <div class="commodityImg">
+            <div class="eachChild">
+                <a href="/goods_details.html?id={{_id}}">
+                    <img bind-src="{{preview_img_url||'/images/error.jpg'}}?imageView2/1/w/200/h/200" class="commodity-img" title="{{goods_name}}"  />
+                </a>
+                <!-- {{$Js._canWebp&&'/format/webp'}} -->
+            </div>
+             <div class="hidden">
+                <div class="intro">
+                    <p>{{intro}}</p>
+                </div>
+                <div class="tobuy">
+                    {{#if num}}
+                    <button class="buy" event-click="{{'$Private.$Event.add_to_cart'}}">直接购买</button>
+                   <!--  {{'       库存:' + num}} -->
+                    {{#else}}
+                    <button class="buy" disabled style="background-color:red;cursor:default;">此商品缺货</button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="dec">
+            <div class="item">{{goods_name}}</div>
+            <div class="item"><div class="price" style="color:red">{{#if $Private.finally_cash!=price}}<del>￥{{#Fixed price}}</del>{{/if}}￥{{#Fixed $Private.finally_cash}}/{{unit}}</div>
+            <div class="count"><!-- 销量:{{sale_num}} --> {{'       库存:' + num}}</div></div>
+        </div>
+    </div>
+</xmp>
+
+
+
+<xmp type="tag" name="addressinput">
+    <address ${__all_attrs__}>
+        <select class="province" name="province" value="{{$CPrivate.province}}" bind-input="{{'$CPrivate.province'}}" event-change={{'$CPrivate.$Event.province'}}>
+            <option class="first" value="">请选择省</option>
+            <!-- {{#each $CPrivate.province_list}}
+            <option value="{{region_name}}">
+                {{region_name}}
+            </option>
+            {{/each}} -->
+            {{#each $CPrivate.province_list}}
+            <optgroup label="{{group_name}}">
+                {{#each list}}
+                <option value="{{$This}}">
+                    {{$This}}
+                </option>
+                {{/each}}
+            </optgroup>
+            {{/each}}
+        </select>
+
+        <select class="city" name="city" disabled="{{!$CPrivate.province}}" value="{{$CPrivate.city}}" bind-input="{{'$CPrivate.city'}}" event-change={{'$CPrivate.$Event.city'}}>
+            {{#if !$CPrivate.province}}
+            <option class="first" value="">请先选择省</option>
+            {{#else}}
+                {{#if $CPrivate.city_list.length}}
+                <option class="first" value="">请选择市</option>
+                {{#else}}
+                <option class="first" value="">无可选市</option>
+                {{/if}}
+            {{/if}}
+            {{#each $CPrivate.city_list}}
+            <option value="{{region_name}}">
+                {{region_name}}
+            </option>
+            {{/each}}
+        </select>
+
+        <select class="county" name="county" disabled="{{!($CPrivate.city&&$CPrivate.county_list.length)}}" value="{{$CPrivate.county}}" bind-input="{{'$CPrivate.county'}}" event-change={{'$CPrivate.$Event.county'}}>
+            {{#if !$CPrivate.city}}
+            <option class="first" value="">请先选择市</option>
+            {{#else}}
+                {{#if $CPrivate.county_list.length}}
+                <option class="first" value="">请选择地区</option>
+                {{#else}}
+                <option class="first" value="">无可选地区</option>
+                {{/if}}
+            {{/if}}
+            {{#each $CPrivate.county_list}}
+            <option value="{{region_name}}">
+                {{region_name}}
+            </option>
+            {{/each}}
+        </select>
+        {{#if $Private.edit_detail}}
+        <input type="text" class="detailed_addre" name="detailed_addre" placeholder="详细地址" maxlength="25" value="{{$CPrivate.detail}}" bind-input="{{'$CPrivate.detail'}}" event-input="{{'$CPrivate.$Event.detail'}}"/>
+        {{/if}}
+    </address>
+</xmp>
+
+<xmp type="tag" name="jqrcode">
+    <div ${__all_attrs__}>加载中……</div>
+    <a href="{{$CPrivate.$Cache.download_href||'void:0;'}}" download="${download-name}">
+        <img style="disaply:none;position: absolute; top: 0; left: 0; visibility: hidden;">
+    </a>
+</xmp>
